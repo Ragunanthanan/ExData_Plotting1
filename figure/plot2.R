@@ -1,0 +1,15 @@
+data<- read.table('household_power_consumption.txt', header = T, sep=';')
+head(data)
+datetime<- paste(data$Date, data$Time)
+head(datetime)
+datetime<-as.POSIXct(datetime, format= "%d/%m/%Y %H:%M:%S")
+data$datetime<- datetime
+names(data)
+str(data$datetime)
+data<- data[data$Date=='1/2/2007'| data$Date=='2/2/2007',]
+head(data)
+library(dplyr)
+data<- mutate(data,GlobalActivePower=as.numeric(Global_active_power)/500)
+plot(data$datetime, data$GlobalActivePower, type = 'l', xlab = 'datetime', ylab = 'Global Active Power (KWs)')
+dev.copy(png, 'plot2.png')
+dev.off()

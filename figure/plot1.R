@@ -1,0 +1,10 @@
+data<- read.table("household_power_consumption.txt", header = T, sep=';')
+head(data)
+final_data<- data[data$Date=='1/2/2007' | data$Date=='2/2/2007',]
+names(final_data)
+library(dplyr)
+final_data<- mutate(final_data, GlobalActivePower= as.numeric(Global_active_power)/500)
+head(final_data$GlobalActivePower)
+hist(final_data$GlobalActivePower, col = 'Red', ylim = c(0,1200),main='Global Active Power', xlab='Global Active Power(Kilowatts)')
+dev.copy(png, "plot1.png")
+dev.off()
